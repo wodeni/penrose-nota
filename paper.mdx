@@ -1,2 +1,44 @@
+import { Embed } from "@penrose/components";
+
+<Title>Penrose+Nota</Title>
+
 # Hello World!
-This is my <Smallcaps>Paper</Smallcaps>
+
+This is my <Smallcaps>Paper</Smallcaps>, demonstrating how one can embed <Smallcaps>Penrose</Smallcaps> diagrams in <Smallcaps>Nota</Smallcaps>.
+
+This is my <Smallcaps>Penrose</Smallcaps> diagram
+
+<Embed
+  substanceString={`
+  Tool Penrose
+  Tool Nota
+  InLove(Penrose, Nota)
+  Label Penrose $\\textsc{Penrose}$
+  Label Nota $\\textsc{Nota}$
+  `}
+  styleString={`
+  canvas {
+    width = 400
+    height = 400
+  }
+  Tool X {
+    X.shape = Circle { }
+    X.text = Text { string: X.label }
+    ensure contains(X.shape, X.text)
+    ensure maxSize(X.shape, canvas.height / 2)
+    ensure minSize(X.shape)
+    encourage sameCenter(X.text, X.shape)
+    X.text above X.shape
+  }
+  Tool X, Y
+  where InLove(X, Y) {
+    ensure overlapping(X.shape, Y.shape)
+    ensure outsideOf(X.text, Y.shape)
+    ensure outsideOf(Y.text, X.shape)
+  }
+  `}
+  domainString={`
+  type Tool
+  predicate InLove: Tool a * Tool b
+  `}
+/>
